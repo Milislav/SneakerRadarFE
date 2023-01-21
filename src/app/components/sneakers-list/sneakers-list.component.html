@@ -1,0 +1,58 @@
+<app-header (select)="selectedSearch($event)" (selectBrand)="selectedBrand($event)"></app-header>
+<div class="container">
+
+  <div id="filter-area">
+    <button  type="button" class="btn btn-primary" *ngIf="order" (click)="orderSetNull()">sort: {{order}}</button>
+    <button  type="button" class="btn btn-primary" *ngIf="sneakerSizeSelected" (click)="sizeSetNull()">size: {{sneakerSizeSelected}}</button>
+    <button  type="button" class="btn btn-primary" *ngIf="searchTerm" (click)="searchTermSetNull()">seatch term:  {{searchTerm}}</button>
+  </div>
+
+  <div id="search-area">
+    <span>Sort by price:</span>
+
+    <button mat-button (click)="sortProducts('ascending')"><i style="font-size:18px" class="fa">&#xf077;</i></button>
+    <button mat-button (click)="sortProducts('descending')"><i style="font-size:18px" class="fa">&#xf078;</i></button>
+
+    <mat-paginator [length]="totalElements" [pageSize]="pageSize" [pageSizeOptions]="[24, 48, 100]"
+                   (page)="nextPage($event)"></mat-paginator>
+
+    <mat-form-field>
+      <mat-select placeholder="size">
+
+        <mat-option *ngFor="let sneakerSize of sneakerSizes; let i =index" [value]="sneakerSize">
+
+          <mat-checkbox [checked]="selectedCheckBox === i" (change)="onChangeSneakerSize(sneakerSize);selectedCheckBox = i">
+            {{sneakerSize}}</mat-checkbox>
+
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <br>
+
+  <div class="row">
+
+    <div class="col-md-4 col-sm-6" *ngFor="let sneaker of sneakers">
+      <div class="product-grid2">
+        <div class="product-image2">
+          <a href="#">
+            <img class="pic-1" src={{sneaker.imgSrc}}>
+            <img class="pic-2" src={{sneaker.imgSrc}}>
+          </a>
+          <ul class="social">
+            <li><a href="{{sneaker.link}}" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
+          </ul>
+
+        </div>
+        <div class="product-content">
+          <h3 class="title"><a href={{sneaker.link}}>{{sneaker.name}}</a></h3>
+          <span class="price">{{sneaker.price}} <span> MKD</span></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<app-footer></app-footer>
+
